@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Scene Detector</string>
+    <string name="hero_eyebrow">ON-DEVICE AI</string>
+    <string name="screen_title">What is in this scene?</string>
+    <string name="screen_description">Detect and locate objects in a saved image or live camera feed on an Arm-based Android device.</string>
+    <string name="choose_mode">Choose a detector</string>
+    <string name="executorch_mode_title">ExecuTorch detection</string>
+    <string name="executorch_mode_description">Run supported YOLO, DETR, and SSD models</string>
+    <string name="selected_image_title">Image or camera</string>
+    <string name="detection_image_description">Selected image with object-detection boxes</string>
+    <string name="choose_image">Choose saved image</string>
+    <string name="start_camera">Start live camera</string>
+    <string name="stop_camera">Stop live camera</string>
+    <string name="model_card_title">Detection model</string>
+    <string name="model_not_imported">Model setup needed</string>
+    <string name="executorch_model_missing">Add a supported ExecuTorch detection model before running detection.</string>
+    <string name="executorch_model_ready">Uses a 640 × 640 COCO detector with model-specific preprocessing and decoding.</string>
+    <string name="import_executorch_model">Add or change model</string>
+    <string name="confidence_title">Confidence threshold</string>
+    <string name="confidence_description">Increase the value to show fewer, higher-confidence boxes.</string>
+    <string name="confidence_default">75%</string>
+    <string name="confidence_value">%1$d%%</string>
+    <string name="run_detection">Detect objects</string>
+    <string name="results_title">Detection summary</string>
+    <string name="initial_instructions">Add a model, then choose a saved image or start the live camera.</string>
+    <string name="model_ready_result">The detector is ready. Choose an image to continue.</string>
+    <string name="image_ready">Image ready. Run object detection.</string>
+    <string name="importing_model">Setting up the detection model…</string>
+    <string name="running_executorch">Detecting objects with ExecuTorch…</string>
+    <string name="model_import_failed">Model setup failed: %1$s</string>
+    <string name="image_open_failed">Unable to open image: %1$s</string>
+    <string name="inference_failed">Detection failed: %1$s</string>
+    <string name="import_before_running">Add a model for this detector before running it.</string>
+    <string name="choose_before_running">Choose an image before running detection.</string>
+    <string name="import_before_camera">Add a model before starting live camera detection.</string>
+    <string name="starting_camera">Starting the camera…</string>
+    <string name="camera_running">Live camera detection is running.</string>
+    <string name="camera_stopped">Camera stopped. Start it again or choose another input.</string>
+    <string name="camera_permission_denied">Camera permission is required for live detection. You can still analyze a saved image.</string>
+    <string name="camera_start_failed">Unable to start the camera: %1$s</string>
+</resources>

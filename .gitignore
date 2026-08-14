@@ -1,0 +1,14 @@
+.gradle/
+.idea/
+local.properties
+models/
+detector-*.jpg
+street-scene.jpg
+.hf-venv/
+__pycache__/
+*.pyc
+**/build/
+*.iml
+!app/src/main/AndroidManifest.xml
+!app/src/main/res/
+!app/src/main/res/**/*.xml

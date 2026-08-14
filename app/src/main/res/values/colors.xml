@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="ink">#092E35</color>
+    <color name="ink_soft">#4F666B</color>
+    <color name="teal">#007F86</color>
+    <color name="teal_dark">#00666C</color>
+    <color name="teal_pale">#DDF5F3</color>
+    <color name="mist">#F2F7F6</color>
+    <color name="line">#D9E6E4</color>
+    <color name="white">#FFFFFF</color>
+    <color name="hero_text">#D8EFEC</color>
+    <color name="disabled">#A9BCBA</color>
+</resources>
