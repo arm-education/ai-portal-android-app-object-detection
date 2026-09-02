@@ -11,7 +11,7 @@ final class ModelRegistry {
                     "YOLOv5s INT8",
                     ExecuTorchObjectDetectionAdapter.ID,
                     "ExecuTorch",
-                    "yolov5s-int8-executorch.pte",
+                    "yolov5s_raspberry_executorch_optimized.pte",
                     ExecuTorchObjectDetectionAdapter.CONFIG_YOLO_V5,
                     DEFAULT_CONFIDENCE_PERCENT
             ),
@@ -20,7 +20,7 @@ final class ModelRegistry {
                     "YOLOv8s INT8",
                     ExecuTorchObjectDetectionAdapter.ID,
                     "ExecuTorch",
-                    "yolov8s-int8-executorch.pte",
+                    "yolov8s_raspberry_executorch_optimized.pte",
                     ExecuTorchObjectDetectionAdapter.CONFIG_YOLO_V8,
                     DEFAULT_CONFIDENCE_PERCENT
             ),
@@ -29,7 +29,7 @@ final class ModelRegistry {
                     "YOLOv9s INT8",
                     ExecuTorchObjectDetectionAdapter.ID,
                     "ExecuTorch",
-                    "yolov9s-int8-executorch.pte",
+                    "yolov9s_raspberry_executorch_optimized.pte",
                     ExecuTorchObjectDetectionAdapter.CONFIG_YOLO_V9,
                     DEFAULT_CONFIDENCE_PERCENT
             ),
@@ -47,7 +47,7 @@ final class ModelRegistry {
                     "Deformable DETR INT8",
                     ExecuTorchObjectDetectionAdapter.ID,
                     "ExecuTorch",
-                    "deformable-detr-int8-executorch.pte",
+                    "deformable-detr_raspberry_executorch_optimized.pte",
                     ExecuTorchObjectDetectionAdapter.CONFIG_DEFORMABLE_DETR,
                     DEFAULT_CONFIDENCE_PERCENT
             ),
@@ -56,7 +56,7 @@ final class ModelRegistry {
                     "SSD ResNet50 INT8",
                     ExecuTorchObjectDetectionAdapter.ID,
                     "ExecuTorch",
-                    "ssd-resnet50-int8-executorch.pte",
+                    "ssd_resnet50_executorch_optimized.pte",
                     ExecuTorchObjectDetectionAdapter.CONFIG_SSD_RESNET50,
                     DEFAULT_CONFIDENCE_PERCENT
             )

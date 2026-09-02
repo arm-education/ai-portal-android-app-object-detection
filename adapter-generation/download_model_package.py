@@ -13,7 +13,19 @@ def model_directory(output_directory: Path, model_id: str) -> Path:
     return output_directory / model_id.replace("/", "__")
 
 
-def primary_model_path(directory: Path) -> Path:
+def primary_model_path(directory: Path, filename: str | None = None) -> Path:
+    if filename is not None:
+        candidate = (directory / filename).resolve()
+        try:
+            candidate.relative_to(directory.resolve())
+        except ValueError as exception:
+            raise SystemExit(
+                f"The requested model filename is outside the package directory: {filename}"
+            ) from exception
+        if not candidate.is_file():
+            raise SystemExit(f"The requested model file was not found: {candidate}")
+        return candidate
+
     for metadata_name in ("metadata.yaml", "metadata.yml"):
         metadata_path = directory / metadata_name
         if not metadata_path.is_file():
@@ -32,9 +44,7 @@ def primary_model_path(directory: Path) -> Path:
             ) from exception
         if candidate.is_file():
             return candidate
-        raise SystemExit(
-            f"The primary model file recorded in {metadata_path} was not found: {candidate}"
-        )
+        break
 
     candidates = [
         path.resolve()
@@ -45,9 +55,16 @@ def primary_model_path(directory: Path) -> Path:
         return candidates[0]
     if not candidates:
         raise SystemExit("The downloaded package does not identify a model binary.")
+
+    optimized_candidates = [
+        path for path in candidates if "optimized" in path.stem.lower()
+    ]
+    if len(optimized_candidates) == 1:
+        return optimized_candidates[0]
+
     raise SystemExit(
         "The downloaded package contains multiple model binaries and does not identify "
-        "the primary file in metadata.yaml."
+        "one optimized file. Run again with --filename."
     )
 
 
@@ -57,6 +74,10 @@ def main() -> None:
     )
     parser.add_argument("--repo-id", required=True)
     parser.add_argument("--revision")
+    parser.add_argument(
+        "--filename",
+        help="Primary model filename when package metadata is missing or stale",
+    )
     parser.add_argument("--output-dir", type=Path, default=Path("models"))
     parser.add_argument(
         "--print-model-path",
@@ -75,7 +96,7 @@ def main() -> None:
     )
     downloaded_directory = Path(downloaded).resolve()
     if args.print_model_path:
-        print(primary_model_path(downloaded_directory))
+        print(primary_model_path(downloaded_directory, args.filename))
     else:
         print(downloaded_directory)
 

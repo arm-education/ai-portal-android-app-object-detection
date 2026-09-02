@@ -30,12 +30,12 @@ The model registry uses the filename to select the supplied adapter and the dete
 
 | Model | Runtime | Import this file |
 | --- | --- | --- |
-| [YOLOv5s INT8](https://huggingface.co/Arm/yolov5s-int8-xnnpack-executorch) | ExecuTorch | `yolov5s-int8-executorch.pte` |
-| [YOLOv8s INT8](https://huggingface.co/Arm/yolov8s-int8-xnnpack-executorch) | ExecuTorch | `yolov8s-int8-executorch.pte` |
-| [YOLOv9s INT8](https://huggingface.co/Arm/yolov9s-int8-xnnpack-executorch) | ExecuTorch | `yolov9s-int8-executorch.pte` |
+| [YOLOv5s INT8](https://huggingface.co/Arm/yolov5s-int8-xnnpack-executorch) | ExecuTorch | `yolov5s_raspberry_executorch_optimized.pte` |
+| [YOLOv8s INT8](https://huggingface.co/Arm/yolov8s-int8-xnnpack-executorch) | ExecuTorch | `yolov8s_raspberry_executorch_optimized.pte` |
+| [YOLOv9s INT8](https://huggingface.co/Arm/yolov9s-int8-xnnpack-executorch) | ExecuTorch | `yolov9s_raspberry_executorch_optimized.pte` |
 | [RT-DETR-L INT8](https://huggingface.co/Arm/rtdetr-l-int8-xnnpack-executorch) | ExecuTorch | `rtdetr-l-int8-executorch.pte` |
-| [Deformable DETR INT8](https://huggingface.co/Arm/deformable-detr-int8-xnnpack-executorch-raspberrypi5) | ExecuTorch | `deformable-detr-int8-executorch.pte` |
-| [SSD ResNet50 INT8](https://huggingface.co/Arm/ssd-resnet50-int8-xnnpack-executorch) | ExecuTorch | `ssd-resnet50-int8-executorch.pte` |
+| [Deformable DETR INT8](https://huggingface.co/Arm/deformable-detr-int8-xnnpack-executorch-raspberrypi5) | ExecuTorch | `deformable-detr_raspberry_executorch_optimized.pte` |
+| [SSD ResNet50 INT8](https://huggingface.co/Arm/ssd-resnet50-int8-xnnpack-executorch) | ExecuTorch | `ssd_resnet50_executorch_optimized.pte` |
 
 The adapter uses three internal detector implementations:
 
@@ -87,7 +87,7 @@ $MODEL_FILE = python download_model.py `
 Write-Output "Model file: $MODEL_FILE"
 ```
 
-For a supported model, the script downloads the registered `.pte` file. For another repository, it downloads the package and selects its only `.pte` file. Use `--filename` if the repository contains more than one model file.
+For a supported model, the script downloads the registered `.pte` file. RT-DETR publishes its model as `optimized.pte`, so the script saves it as `rtdetr-l-int8-executorch.pte`. For another repository, it downloads the package and selects its only `.pte` file. Use `--filename` if the repository contains more than one model file.
 
 Copy the downloaded model to the Android **Downloads** directory through ADB:
 

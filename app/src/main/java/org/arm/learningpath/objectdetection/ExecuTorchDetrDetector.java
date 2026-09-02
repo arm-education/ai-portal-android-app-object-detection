@@ -127,26 +127,32 @@ final class ExecuTorchDetrDetector implements DetectionRunner {
 
     private List<Candidate> decodeDeformableDetr(EValue[] outputs, Bitmap source,
                                                   float threshold) {
-        Tensor logitsTensor = requireTensor(outputs, 0, new long[]{1, QUERY_COUNT, 92});
+        Tensor logitsTensor = requireTensor(
+                outputs,
+                0,
+                new long[]{1, QUERY_COUNT, 91},
+                new long[]{1, QUERY_COUNT, 92}
+        );
         Tensor boxesTensor = requireTensor(outputs, 1, new long[]{1, QUERY_COUNT, 4});
         float[] logits = logitsTensor.getDataAsFloatArray();
         float[] boxes = boxesTensor.getDataAsFloatArray();
         List<Candidate> candidates = new ArrayList<>();
+        int logitsCount = (int) logitsTensor.shape()[2];
 
         for (int query = 0; query < QUERY_COUNT; query++) {
-            int logitsOffset = query * 92;
+            int logitsOffset = query * logitsCount;
             float maximum = -Float.MAX_VALUE;
-            for (int classIndex = 0; classIndex < 92; classIndex++) {
+            for (int classIndex = 0; classIndex < logitsCount; classIndex++) {
                 maximum = Math.max(maximum, logits[logitsOffset + classIndex]);
             }
             double sum = 0.0;
-            for (int classIndex = 0; classIndex < 92; classIndex++) {
+            for (int classIndex = 0; classIndex < logitsCount; classIndex++) {
                 sum += Math.exp(logits[logitsOffset + classIndex] - maximum);
             }
 
             int bestCategory = 0;
             float bestScore = 0.0f;
-            for (int categoryId = 0; categoryId < 91; categoryId++) {
+            for (int categoryId = 0; categoryId < logitsCount - 1; categoryId++) {
                 float score = (float) (
                         Math.exp(logits[logitsOffset + categoryId] - maximum) / sum
                 );
@@ -254,12 +260,20 @@ final class ExecuTorchDetrDetector implements DetectionRunner {
         return data;
     }
 
-    private static Tensor requireTensor(EValue[] outputs, int index, long[] expectedShape) {
+    private static Tensor requireTensor(EValue[] outputs, int index,
+                                        long[]... expectedShapes) {
         if (outputs == null || outputs.length <= index || !outputs[index].isTensor()) {
             throw new IllegalStateException("The DETR forward method returned unexpected outputs.");
         }
         Tensor tensor = outputs[index].toTensor();
-        if (tensor.dtype() != DType.FLOAT || !Arrays.equals(tensor.shape(), expectedShape)) {
+        boolean shapeMatches = false;
+        for (long[] expectedShape : expectedShapes) {
+            if (Arrays.equals(tensor.shape(), expectedShape)) {
+                shapeMatches = true;
+                break;
+            }
+        }
+        if (tensor.dtype() != DType.FLOAT || !shapeMatches) {
             throw new IllegalStateException(
                     "Unexpected DETR tensor at output " + index + ": "
                             + Arrays.toString(tensor.shape())
