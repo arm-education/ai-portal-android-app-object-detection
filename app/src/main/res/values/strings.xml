@@ -6,7 +6,7 @@
     <string name="screen_description">Detect and locate objects in a saved image or live camera feed on an Arm-based Android device.</string>
     <string name="choose_mode">Choose a detector</string>
     <string name="executorch_mode_title">ExecuTorch detection</string>
-    <string name="executorch_mode_description">Run supported YOLO, DETR, and SSD models</string>
+    <string name="executorch_mode_description">Run supported YOLO models</string>
     <string name="selected_image_title">Image or camera</string>
     <string name="detection_image_description">Selected image with object-detection boxes</string>
     <string name="choose_image">Choose saved image</string>

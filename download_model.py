@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 
 import argparse
-import shutil
 import sys
 from pathlib import Path
 
@@ -10,17 +9,6 @@ SUPPORTED_MODELS = {
     "Arm/yolov5s-int8-xnnpack-executorch": "yolov5s_raspberry_executorch_optimized.pte",
     "Arm/yolov8s-int8-xnnpack-executorch": "yolov8s_raspberry_executorch_optimized.pte",
     "Arm/yolov9s-int8-xnnpack-executorch": "yolov9s_raspberry_executorch_optimized.pte",
-    "Arm/rtdetr-l-int8-xnnpack-executorch": "optimized.pte",
-    "Arm/deformable-detr-int8-xnnpack-executorch-raspberrypi5": (
-        "deformable-detr_raspberry_executorch_optimized.pte"
-    ),
-    "Arm/ssd-resnet50-int8-xnnpack-executorch": (
-        "ssd_resnet50_executorch_optimized.pte"
-    ),
-}
-
-IMPORT_FILENAMES = {
-    "Arm/rtdetr-l-int8-xnnpack-executorch": "rtdetr-l-int8-executorch.pte",
 }
 
 
@@ -71,10 +59,6 @@ def main() -> None:
                 local_dir=destination,
             )
         )
-        if args.filename is None and args.repo_id in IMPORT_FILENAMES:
-            import_path = destination / IMPORT_FILENAMES[args.repo_id]
-            shutil.copy2(downloaded_path, import_path)
-            downloaded_path = import_path
     else:
         print(f"Downloading {args.repo_id} to {destination} ...", file=output_stream)
         snapshot_path = Path(

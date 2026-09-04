@@ -32,33 +32,6 @@ final class ModelRegistry {
                     "yolov9s_raspberry_executorch_optimized.pte",
                     ExecuTorchObjectDetectionAdapter.CONFIG_YOLO_V9,
                     DEFAULT_CONFIDENCE_PERCENT
-            ),
-            new ModelDescriptor(
-                    "rtdetr-l-executorch",
-                    "RT-DETR-L INT8",
-                    ExecuTorchObjectDetectionAdapter.ID,
-                    "ExecuTorch",
-                    "rtdetr-l-int8-executorch.pte",
-                    ExecuTorchObjectDetectionAdapter.CONFIG_RT_DETR,
-                    DEFAULT_CONFIDENCE_PERCENT
-            ),
-            new ModelDescriptor(
-                    "deformable-detr-executorch",
-                    "Deformable DETR INT8",
-                    ExecuTorchObjectDetectionAdapter.ID,
-                    "ExecuTorch",
-                    "deformable-detr_raspberry_executorch_optimized.pte",
-                    ExecuTorchObjectDetectionAdapter.CONFIG_DEFORMABLE_DETR,
-                    DEFAULT_CONFIDENCE_PERCENT
-            ),
-            new ModelDescriptor(
-                    "ssd-resnet50-executorch",
-                    "SSD ResNet50 INT8",
-                    ExecuTorchObjectDetectionAdapter.ID,
-                    "ExecuTorch",
-                    "ssd_resnet50_executorch_optimized.pte",
-                    ExecuTorchObjectDetectionAdapter.CONFIG_SSD_RESNET50,
-                    DEFAULT_CONFIDENCE_PERCENT
             )
     );
     private static final List<ModelDescriptor> MODELS = createModels();

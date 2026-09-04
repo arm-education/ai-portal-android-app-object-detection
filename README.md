@@ -4,7 +4,7 @@ This example application accompanies the [Arm Learning Path for running object-d
 
 This Android application runs Arm-optimized object-detection models locally on an Arm64 phone or emulator. It includes one supplied adapter:
 
-- `ExecuTorchObjectDetectionAdapter` provides **ExecuTorch detection** for supported YOLO, DETR, and SSD models. It routes each model to a detector strategy that handles the required preprocessing, output decoding, and postprocessing.
+- `ExecuTorchObjectDetectionAdapter` provides **ExecuTorch detection** for supported YOLO models. It routes each model to the matching preprocessing, output decoding, and postprocessing configuration.
 
 The application imports model binaries at run time, so the model files are not stored in the Android application package (APK).
 
@@ -33,15 +33,8 @@ The model registry uses the filename to select the supplied adapter and the dete
 | [YOLOv5s INT8](https://huggingface.co/Arm/yolov5s-int8-xnnpack-executorch) | ExecuTorch | `yolov5s_raspberry_executorch_optimized.pte` |
 | [YOLOv8s INT8](https://huggingface.co/Arm/yolov8s-int8-xnnpack-executorch) | ExecuTorch | `yolov8s_raspberry_executorch_optimized.pte` |
 | [YOLOv9s INT8](https://huggingface.co/Arm/yolov9s-int8-xnnpack-executorch) | ExecuTorch | `yolov9s_raspberry_executorch_optimized.pte` |
-| [RT-DETR-L INT8](https://huggingface.co/Arm/rtdetr-l-int8-xnnpack-executorch) | ExecuTorch | `rtdetr-l-int8-executorch.pte` |
-| [Deformable DETR INT8](https://huggingface.co/Arm/deformable-detr-int8-xnnpack-executorch-raspberrypi5) | ExecuTorch | `deformable-detr_raspberry_executorch_optimized.pte` |
-| [SSD ResNet50 INT8](https://huggingface.co/Arm/ssd-resnet50-int8-xnnpack-executorch) | ExecuTorch | `ssd_resnet50_executorch_optimized.pte` |
 
-The adapter uses three internal detector implementations:
-
-- `ExecuTorchYoloDetector` handles the three YOLO configurations.
-- `ExecuTorchDetrDetector` handles RT-DETR and Deformable DETR.
-- `ExecuTorchSsdDetector` handles the SSD anchor grid and box decoder.
+`ExecuTorchYoloDetector` handles the three YOLO configurations.
 
 ## Download a model
 
@@ -87,7 +80,7 @@ $MODEL_FILE = python download_model.py `
 Write-Output "Model file: $MODEL_FILE"
 ```
 
-For a supported model, the script downloads the registered `.pte` file. RT-DETR publishes its model as `optimized.pte`, so the script saves it as `rtdetr-l-int8-executorch.pte`. For another repository, it downloads the package and selects its only `.pte` file. Use `--filename` if the repository contains more than one model file.
+For a supported model, the script downloads the registered `.pte` file. For another repository, it downloads the package and selects its only `.pte` file. Use `--filename` if the repository contains more than one model file.
 
 Copy the downloaded model to the Android **Downloads** directory through ADB:
 
@@ -149,7 +142,7 @@ If the model keeps the ExecuTorch runtime and per-image detection interface but 
 
 ## Extend the application
 
-The application discovers detection modes through `AdapterRegistry.java`. The supplied adapter supports the registered ExecuTorch YOLO, DETR, and SSD models. `GeneratedAdapterRegistry.java` is intentionally empty and provides a build-time extension point for a model package that does not fit that adapter.
+The application discovers detection modes through `AdapterRegistry.java`. The supplied adapter supports the registered ExecuTorch YOLO models. `GeneratedAdapterRegistry.java` is intentionally empty and provides a build-time extension point for a model package that does not fit that adapter.
 
 A LiteRT object detector could implement the same `DetectionAdapter` interface and reuse the application's image input, camera input, confidence control, and overlay UI. A separate `LiteRtObjectDetectionAdapter` would provide the LiteRT dependency, `.tflite` validation, preprocessing, model runner, and output decoder. The supplied application does not include a tested LiteRT adapter.
 

@@ -8,12 +8,11 @@ select another runtime, or obtain another model package.
 Read DetectionAdapter.java, AdapterDefinition.java, DetectionRunner.java,
 Detection.java, DetectionResult.java, ModelDescriptor.java,
 ExecuTorchObjectDetectionAdapter.java, ExecuTorchYoloDetector.java,
-ExecuTorchDetrDetector.java, ExecuTorchSsdDetector.java,
 GeneratedAdapterRegistry.java, and app/generated-runtime-dependencies.gradle.kts.
 Preserve their contracts and keep the supplied ExecuTorch adapter unchanged.
 
-First compare the package with the supplied YOLO, RT-DETR, Deformable DETR, and
-SSD contracts. Add another model profile or internal detector strategy when the
+First compare the package with the supplied YOLO contracts. Add another model
+profile or internal detector strategy when the
 package uses the same ExecuTorch runtime, object-detection task, imported-file
 flow, and per-frame bitmap UI. Generate a separate DetectionAdapter when the
 package needs a different runtime or callable methods but still accepts one
