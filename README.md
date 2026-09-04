@@ -1,6 +1,6 @@
 # Scene Detector Android application
 
-This example application accompanies the [Arm Learning Path for running object-detection models from the Arm AI Portal on Android](https://learn.arm.com/learning-paths/mobile-graphics-and-gaming/ai-portal-mobile-object-detection). It is intended for learning how models run on devices and is not a reference production application. It is provided under the [Arm Education End User License Agreement](LICENSE.md).
+This example application accompanies the [Arm Learning Path for running object-detection models from the Arm AI Portal on Android](https://learn.arm.com/learning-paths/mobile-graphics-and-gaming/ai-portal-mobile-object-detection). It is intended for learning how models run on devices and is not a reference production application.
 
 This Android application runs Arm-optimized object-detection models locally on an Arm64 phone or emulator. It includes one supplied adapter:
 
