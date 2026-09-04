@@ -24,7 +24,7 @@ The application detects objects in saved images or frames from a live camera. It
 - An Arm64 Android device running Android 9, API 28, or later
 - One supported or registered model file downloaded from the Arm AI Portal
 
-## supported models
+## Supported models
 
 The model registry uses the filename to select the supplied adapter and the detector configuration required by the model package. The adapter validates the model and routes it to the matching preprocessing and output-decoding strategy.
 
