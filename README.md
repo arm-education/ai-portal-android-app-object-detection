@@ -12,7 +12,9 @@ The application imports model binaries at run time, so the model files are not s
 ## Application views
 
 <p align="center">
-  <img src="docs/images/scene-detector-image.png" width="35%" alt="Scene Detector drawing object labels and bounding boxes over a street image">
+  <img src="docs/images/scene-detector-startup.png" width="30%" alt="Scene Detector startup screen showing separate ExecuTorch and LiteRT detector choices">
+  <img src="docs/images/scene-detector-image.png" width="30%" alt="Scene Detector running an ExecuTorch model and drawing object labels and bounding boxes over a street image">
+  <img src="docs/images/scene-detector-litert.png" width="30%" alt="Scene Detector running a YOLO26n FP16 LiteRT model with aligned object-detection boxes and a detection summary">
 </p>
 
 The application detects objects in saved images or frames from a live camera. It displays each retained label, confidence score, and bounding box.
