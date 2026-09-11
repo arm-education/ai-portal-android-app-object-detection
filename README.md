@@ -2,16 +2,16 @@
 
 This example application accompanies the [Arm Learning Path for running object-detection models from the Arm AI Portal on Android](https://learn.arm.com/learning-paths/mobile-graphics-and-gaming/ai-portal-mobile-object-detection). It is intended for learning how models run on devices and is not a reference production application.
 
-This Android application runs Arm-optimized object-detection models locally on an Arm64 phone or emulator. It includes one supplied adapter:
+This Android application runs Arm-optimized object-detection models locally on an Arm64 phone or emulator. It includes two supplied adapters:
 
 - `ExecuTorchObjectDetectionAdapter` provides **ExecuTorch detection** for supported YOLO models. It routes each model to the matching preprocessing, output decoding, and postprocessing configuration.
+- `LiteRtObjectDetectionAdapter` provides **LiteRT detection** for supported YOLO11 and YOLO26 models. It configures XNNPACK for each model's precision and applies the required input preparation and output decoding.
 
 The application imports model binaries at run time, so the model files are not stored in the Android application package (APK).
 
 ## Application views
 
 <p align="center">
-  <img src="docs/images/scene-detector-startup.png" width="35%" alt="Scene Detector start screen before a model or image has been selected">
   <img src="docs/images/scene-detector-image.png" width="35%" alt="Scene Detector drawing object labels and bounding boxes over a street image">
 </p>
 
@@ -33,8 +33,11 @@ The model registry uses the filename to select the supplied adapter and the dete
 | [YOLOv5s INT8](https://huggingface.co/Arm/yolov5s-int8-xnnpack-executorch) | ExecuTorch | `yolov5s_raspberry_executorch_optimized.pte` |
 | [YOLOv8s INT8](https://huggingface.co/Arm/yolov8s-int8-xnnpack-executorch) | ExecuTorch | `yolov8s_raspberry_executorch_optimized.pte` |
 | [YOLOv9s INT8](https://huggingface.co/Arm/yolov9s-int8-xnnpack-executorch) | ExecuTorch | `yolov9s_raspberry_executorch_optimized.pte` |
+| [YOLO26n FP16](https://huggingface.co/Arm/yolo26n-fp16-litert) | LiteRT | `yolo26n_conv2d_f16_weights.tflite` |
+| [YOLO26n INT8 weight-only](https://huggingface.co/Arm/yolo26n-int8w-litert) | LiteRT | `yolo26n_conv_fc_f16_int8w.tflite` |
+| [YOLO11n INT8](https://huggingface.co/Arm/yolo11n-int8-litert-vivo-x300) | LiteRT | `yolo11n_android_litert_optimized.tflite` |
 
-`ExecuTorchYoloDetector` handles the three YOLO configurations.
+`ExecuTorchYoloDetector` handles the ExecuTorch configurations. `LiteRtYoloDetector` handles the LiteRT configurations, including the XNNPACK FP16 flag for YOLO26 and INT8 input quantization for YOLO11.
 
 ## Download a model
 
@@ -80,7 +83,7 @@ $MODEL_FILE = python download_model.py `
 Write-Output "Model file: $MODEL_FILE"
 ```
 
-For a supported model, the script downloads the registered `.pte` file. For another repository, it downloads the package and selects its only `.pte` file. Use `--filename` if the repository contains more than one model file.
+For a supported model, the script downloads the registered `.pte` or `.tflite` file. For another repository, it downloads the package and selects its only supported model file. Use `--filename` if the repository contains more than one `.pte` or `.tflite` file.
 
 Copy the downloaded model to the Android **Downloads** directory through ADB:
 
@@ -95,7 +98,7 @@ adb push "$MODEL_FILE" /sdcard/Download/
 3. Wait for Gradle sync to finish.
 4. Connect an Arm64 Android phone or start an Arm64 emulator.
 5. Select the `app` configuration and run it.
-6. Select **Add or change model** and choose the matching optimized `.pte` file.
+6. Select the matching detector mode, then select **Add or change model** and choose the optimized `.pte` or `.tflite` file.
 7. Select **Choose saved image** and run **Detect objects**, or select **Start live camera**.
 
 The application does not include a sample image. You can select an image already stored on the device or download this street scene from Wikimedia Commons.
@@ -142,9 +145,9 @@ If the model keeps the ExecuTorch runtime and per-image detection interface but 
 
 ## Extend the application
 
-The application discovers detection modes through `AdapterRegistry.java`. The supplied adapter supports the registered ExecuTorch YOLO models. `GeneratedAdapterRegistry.java` is intentionally empty and provides a build-time extension point for a model package that does not fit that adapter.
+The application discovers detection modes through `AdapterRegistry.java`. The supplied adapters support the registered ExecuTorch and LiteRT YOLO models. `GeneratedAdapterRegistry.java` is intentionally empty and provides a build-time extension point for a model package that does not fit either adapter.
 
-A LiteRT object detector could implement the same `DetectionAdapter` interface and reuse the application's image input, camera input, confidence control, and overlay UI. A separate `LiteRtObjectDetectionAdapter` would provide the LiteRT dependency, `.tflite` validation, preprocessing, model runner, and output decoder. The supplied application does not include a tested LiteRT adapter.
+Another LiteRT detector can reuse `LiteRtObjectDetectionAdapter` only when its input type, image preparation, output tensor, labels, coordinate mapping, and postprocessing match one of the supplied configurations. Add another configuration or adapter when those contracts differ.
 
 Tracking, multi-frame input, different controls, or another result type needs changes to the shared interfaces and `MainActivity.java` before another adapter can support the workflow.
 

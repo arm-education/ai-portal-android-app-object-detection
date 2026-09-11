@@ -25,6 +25,7 @@ final class AdapterRegistry {
     private static List<DetectionAdapter> createAdapters() {
         List<DetectionAdapter> adapters = new ArrayList<>();
         adapters.add(new ExecuTorchObjectDetectionAdapter());
+        adapters.add(new LiteRtObjectDetectionAdapter());
         adapters.addAll(GeneratedAdapterRegistry.adapters());
         return List.copyOf(adapters);
     }

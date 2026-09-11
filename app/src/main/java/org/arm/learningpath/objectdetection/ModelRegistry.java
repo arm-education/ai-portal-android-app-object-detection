@@ -5,6 +5,7 @@ import java.util.List;
 
 final class ModelRegistry {
     private static final int DEFAULT_CONFIDENCE_PERCENT = 75;
+    private static final int LITERT_CONFIDENCE_PERCENT = 25;
     private static final List<ModelDescriptor> BUILT_IN_MODELS = List.of(
             new ModelDescriptor(
                     "yolov5s-executorch",
@@ -32,6 +33,33 @@ final class ModelRegistry {
                     "yolov9s_raspberry_executorch_optimized.pte",
                     ExecuTorchObjectDetectionAdapter.CONFIG_YOLO_V9,
                     DEFAULT_CONFIDENCE_PERCENT
+            ),
+            new ModelDescriptor(
+                    "yolo26n-fp16-litert",
+                    "YOLO26n FP16",
+                    LiteRtObjectDetectionAdapter.ID,
+                    "LiteRT",
+                    "yolo26n_conv2d_f16_weights.tflite",
+                    LiteRtObjectDetectionAdapter.CONFIG_YOLO_26_FP16,
+                    LITERT_CONFIDENCE_PERCENT
+            ),
+            new ModelDescriptor(
+                    "yolo26n-int8-weight-only-litert",
+                    "YOLO26n INT8 weight-only",
+                    LiteRtObjectDetectionAdapter.ID,
+                    "LiteRT",
+                    "yolo26n_conv_fc_f16_int8w.tflite",
+                    LiteRtObjectDetectionAdapter.CONFIG_YOLO_26_INT8_WEIGHT_ONLY,
+                    LITERT_CONFIDENCE_PERCENT
+            ),
+            new ModelDescriptor(
+                    "yolo11n-int8-litert",
+                    "YOLO11n INT8",
+                    LiteRtObjectDetectionAdapter.ID,
+                    "LiteRT",
+                    "yolo11n_android_litert_optimized.tflite",
+                    LiteRtObjectDetectionAdapter.CONFIG_YOLO_11_INT8,
+                    LITERT_CONFIDENCE_PERCENT
             )
     );
     private static final List<ModelDescriptor> MODELS = createModels();
