@@ -7,6 +7,8 @@
     <string name="choose_mode">Choose a detector</string>
     <string name="executorch_mode_title">ExecuTorch detection</string>
     <string name="executorch_mode_description">Run supported YOLO models</string>
+    <string name="litert_mode_title">LiteRT detection</string>
+    <string name="litert_mode_description">Run supported YOLO models</string>
     <string name="selected_image_title">Image or camera</string>
     <string name="detection_image_description">Selected image with object-detection boxes</string>
     <string name="choose_image">Choose saved image</string>
@@ -17,6 +19,9 @@
     <string name="executorch_model_missing">Add a supported ExecuTorch detection model before running detection.</string>
     <string name="executorch_model_ready">Uses a 640 × 640 COCO detector with model-specific preprocessing and decoding.</string>
     <string name="import_executorch_model">Add or change model</string>
+    <string name="litert_model_missing">Add a supported LiteRT detection model before running detection.</string>
+    <string name="litert_model_ready">Uses a 640 × 640 COCO detector with model-specific precision, preprocessing, and decoding.</string>
+    <string name="import_litert_model">Add or change model</string>
     <string name="confidence_title">Confidence threshold</string>
     <string name="confidence_description">Increase the value to show fewer, higher-confidence boxes.</string>
     <string name="confidence_default">75%</string>
@@ -28,6 +33,7 @@
     <string name="image_ready">Image ready. Run object detection.</string>
     <string name="importing_model">Setting up the detection model…</string>
     <string name="running_executorch">Detecting objects with ExecuTorch…</string>
+    <string name="running_litert">Detecting objects with LiteRT…</string>
     <string name="model_import_failed">Model setup failed: %1$s</string>
     <string name="image_open_failed">Unable to open image: %1$s</string>
     <string name="inference_failed">Detection failed: %1$s</string>

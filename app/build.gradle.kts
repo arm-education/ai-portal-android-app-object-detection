@@ -34,6 +34,7 @@ dependencies {
     implementation("androidx.camera:camera-lifecycle:1.4.2")
     implementation("androidx.camera:camera-view:1.4.2")
     implementation("org.pytorch:executorch-android:1.3.1")
+    implementation("com.google.ai.edge.litert:litert:2.2.0")
 }
 
 apply(from = "generated-runtime-dependencies.gradle.kts")

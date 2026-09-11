@@ -9,6 +9,9 @@ SUPPORTED_MODELS = {
     "Arm/yolov5s-int8-xnnpack-executorch": "yolov5s_raspberry_executorch_optimized.pte",
     "Arm/yolov8s-int8-xnnpack-executorch": "yolov8s_raspberry_executorch_optimized.pte",
     "Arm/yolov9s-int8-xnnpack-executorch": "yolov9s_raspberry_executorch_optimized.pte",
+    "Arm/yolo26n-fp16-litert": "yolo26n_conv2d_f16_weights.tflite",
+    "Arm/yolo26n-int8w-litert": "yolo26n_conv_fc_f16_int8w.tflite",
+    "Arm/yolo11n-int8-litert-vivo-x300": "yolo11n_android_litert_optimized.tflite",
 }
 
 
@@ -18,7 +21,7 @@ def model_directory(output_directory: Path, model_id: str) -> Path:
 
 def main() -> None:
     parser = argparse.ArgumentParser(
-        description="Download an ExecuTorch model file for Scene Detector."
+        description="Download a supported model file for Scene Detector."
     )
     parser.add_argument(
         "--repo-id",
@@ -27,7 +30,7 @@ def main() -> None:
     )
     parser.add_argument(
         "--filename",
-        help="Model filename when the repository contains multiple .pte files",
+        help="Model filename when the repository contains multiple supported model files",
     )
     parser.add_argument(
         "--output-dir",
@@ -66,15 +69,18 @@ def main() -> None:
         )
         candidates = sorted(
             path
-            for path in snapshot_path.rglob("*.pte")
+            for pattern in ("*.pte", "*.tflite")
+            for path in snapshot_path.rglob(pattern)
             if path.is_file()
         )
         if not candidates:
-            raise SystemExit("The repository does not contain a .pte model file.")
+            raise SystemExit(
+                "The repository does not contain a .pte or .tflite model file."
+            )
         if len(candidates) > 1:
             choices = ", ".join(path.name for path in candidates)
             raise SystemExit(
-                "The repository contains multiple .pte files. "
+                "The repository contains multiple supported model files. "
                 f"Run the command again with --filename. Found: {choices}"
             )
         downloaded_path = candidates[0]
