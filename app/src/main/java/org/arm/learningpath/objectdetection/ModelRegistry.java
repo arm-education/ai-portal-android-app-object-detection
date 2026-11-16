@@ -35,6 +35,15 @@ final class ModelRegistry {
                     DEFAULT_CONFIDENCE_PERCENT
             ),
             new ModelDescriptor(
+                    "yolox-s-executorch",
+                    "YOLOX-S INT8",
+                    ExecuTorchObjectDetectionAdapter.ID,
+                    "ExecuTorch",
+                    "yolox-s-int8-executorch.pte",
+                    ExecuTorchObjectDetectionAdapter.CONFIG_YOLO_X,
+                    25
+            ),
+            new ModelDescriptor(
                     "yolo26n-fp16-litert",
                     "YOLO26n FP16",
                     LiteRtObjectDetectionAdapter.ID,

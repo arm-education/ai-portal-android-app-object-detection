@@ -9,6 +9,7 @@ final class ExecuTorchObjectDetectionAdapter implements DetectionAdapter {
     static final String CONFIG_YOLO_V5 = "yolo-v5";
     static final String CONFIG_YOLO_V8 = "yolo-v8";
     static final String CONFIG_YOLO_V9 = "yolo-v9";
+    static final String CONFIG_YOLO_X = "yolo-x";
     static final String CONFIG_RT_DETR = "rt-detr";
     static final String CONFIG_DEFORMABLE_DETR = "deformable-detr";
     static final String CONFIG_SSD_RESNET50 = "ssd-resnet50";
@@ -37,6 +38,7 @@ final class ExecuTorchObjectDetectionAdapter implements DetectionAdapter {
             );
         }
         return switch (descriptor.configurationId()) {
+            case CONFIG_YOLO_X -> new ExecuTorchYoloxDetector(context, modelFile);
             case CONFIG_YOLO_V5 -> new ExecuTorchYoloDetector(
                     context,
                     modelFile,
