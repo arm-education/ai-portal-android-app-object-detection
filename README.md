@@ -17,7 +17,7 @@ The application imports model binaries at run time, so the model files are not s
   <img src="docs/images/scene-detector-litert.png" width="30%" alt="Scene Detector running a YOLO26n FP16 LiteRT model with aligned object-detection boxes and a detection summary">
 </p>
 
-The application detects objects in saved images or frames from a live camera. It displays each retained label, confidence score, and bounding box.
+The application detects objects in saved images or frames from a live camera. It displays each retained label, confidence score, and bounding box. The registered profile selects the default confidence threshold: 75% for YOLOv5s, YOLOv8s, and YOLOv9s, and 25% for YOLOX-S and the LiteRT models.
 
 ## Requirements
 
@@ -35,11 +35,12 @@ The model registry uses the filename to select the supplied adapter and the dete
 | [YOLOv5s INT8](https://huggingface.co/Arm/yolov5s-int8-xnnpack-executorch) | ExecuTorch | `yolov5s_raspberry_executorch_optimized.pte` |
 | [YOLOv8s INT8](https://huggingface.co/Arm/yolov8s-int8-xnnpack-executorch) | ExecuTorch | `yolov8s_raspberry_executorch_optimized.pte` |
 | [YOLOv9s INT8](https://huggingface.co/Arm/yolov9s-int8-xnnpack-executorch) | ExecuTorch | `yolov9s_raspberry_executorch_optimized.pte` |
+| [YOLOX-S INT8](https://huggingface.co/Arm/nota-yolox-s-int8-xnnpack-executorch-vivo-x300) | ExecuTorch | `yolox-s-int8-executorch.pte` |
 | [YOLO26n FP16](https://huggingface.co/Arm/yolo26n-fp16-litert) | LiteRT | `yolo26n_conv2d_f16_weights.tflite` |
 | [YOLO26n INT8 weight-only](https://huggingface.co/Arm/yolo26n-int8w-litert) | LiteRT | `yolo26n_conv_fc_f16_int8w.tflite` |
 | [YOLO11n INT8](https://huggingface.co/Arm/yolo11n-int8-litert-vivo-x300) | LiteRT | `yolo11n_android_litert_optimized.tflite` |
 
-`ExecuTorchYoloDetector` handles the ExecuTorch configurations. `LiteRtYoloDetector` handles the LiteRT configurations, including the XNNPACK FP16 flag for YOLO26 and INT8 input quantization for YOLO11.
+`ExecuTorchYoloDetector` handles YOLOv5, YOLOv8, and YOLOv9. `ExecuTorchYoloxDetector` handles YOLOX-S, including top-left letterboxing, BGR values in `[0, 255]`, and decoding its nine separate prediction tensors. Both use the existing ExecuTorch detection adapter. `LiteRtYoloDetector` handles the LiteRT configurations, including the XNNPACK FP16 flag for YOLO26 and INT8 input quantization for YOLO11.
 
 ## Download a model
 
@@ -85,7 +86,7 @@ $MODEL_FILE = python download_model.py `
 Write-Output "Model file: $MODEL_FILE"
 ```
 
-For a supported model, the script downloads the registered `.pte` or `.tflite` file. For another repository, it downloads the package and selects its only supported model file. Use `--filename` if the repository contains more than one `.pte` or `.tflite` file.
+For a supported model, the script downloads the registered `.pte` or `.tflite` file. Packages with generic filenames, such as `model.pte`, receive unique import names from the downloader. Keep the downloader-produced filename unchanged when copying and importing it. For another repository, it downloads the package and selects its only supported model file. Use `--filename` if the repository contains more than one `.pte` or `.tflite` file.
 
 Copy the downloaded model to the Android **Downloads** directory through ADB:
 

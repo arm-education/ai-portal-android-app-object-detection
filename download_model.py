@@ -1,17 +1,24 @@
 #!/usr/bin/env python3
 
 import argparse
+import shutil
 import sys
 from pathlib import Path
 
 
 SUPPORTED_MODELS = {
+    "Arm/nota-yolox-s-int8-xnnpack-executorch-vivo-x300": "model.pte",
     "Arm/yolov5s-int8-xnnpack-executorch": "yolov5s_raspberry_executorch_optimized.pte",
     "Arm/yolov8s-int8-xnnpack-executorch": "yolov8s_raspberry_executorch_optimized.pte",
     "Arm/yolov9s-int8-xnnpack-executorch": "yolov9s_raspberry_executorch_optimized.pte",
     "Arm/yolo26n-fp16-litert": "yolo26n_conv2d_f16_weights.tflite",
     "Arm/yolo26n-int8w-litert": "yolo26n_conv_fc_f16_int8w.tflite",
     "Arm/yolo11n-int8-litert-vivo-x300": "yolo11n_android_litert_optimized.tflite",
+}
+
+
+IMPORT_FILENAMES = {
+    "Arm/nota-yolox-s-int8-xnnpack-executorch-vivo-x300": "yolox-s-int8-executorch.pte",
 }
 
 
@@ -84,6 +91,11 @@ def main() -> None:
                 f"Run the command again with --filename. Found: {choices}"
             )
         downloaded_path = candidates[0]
+    if (args.repo_id in IMPORT_FILENAMES
+            and filename == SUPPORTED_MODELS.get(args.repo_id)):
+        import_path = destination / IMPORT_FILENAMES[args.repo_id]
+        shutil.copy2(downloaded_path, import_path)
+        downloaded_path = import_path
     if not downloaded_path.is_file():
         raise SystemExit(f"The downloaded model file was not found: {downloaded_path}")
 
